@@ -35,10 +35,12 @@ func <<= instr[0:6]
 imm <<= instr[0:17] 
 addr <<= instr[0:26]  
 ### ADD ALU LOGIC HERE ###
-# SUB, AND, OR, XOR, SLL, SRL, SRA, and SLT
+# ADD, SUB, AND, OR, XOR, SLL, SRL, SRA, and SLT
 with pyrtl.conditional_assignment:
+    with func == 0x20: # ADD
+        alu_out |= data0 + data1
     with func == 0x22: # SUB
-        alu_out |= data0 - data1
+        alu_out |= data1 - data0
     with func == 0x24: # AND
         alu_out |= data0 & data1
     with func == 0x25: # OR
